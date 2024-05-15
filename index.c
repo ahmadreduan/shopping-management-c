@@ -27,6 +27,53 @@ void addItem() {
     printf("Item added to the list.\n");
 }
 
+// Function to remove an item from the list
+void removeItem() {
+    if (itemCount == 0) {
+        printf("Shopping list is empty. Nothing to remove.\n");
+        return;
+    }
+    int index;
+    printf("Enter the index of the item to remove: ");
+    scanf("%d", &index);
+    getchar(); // Consume the newline character left in the input buffer
+
+    if (index < 1 || index > itemCount) {
+        printf("Invalid index. Please enter a valid index.\n");
+        return;
+    }
+
+    // Shift items to the left to remove the item at the specified index
+    for (int i = index - 1; i < itemCount - 1; i++) {
+        strcpy(shoppingList[i].name, shoppingList[i + 1].name);
+    }
+    itemCount--;
+    printf("Item removed from the list.\n");
+}
+
+// Function to update the name of an item in the list
+void updateItem() {
+    if (itemCount == 0) {
+        printf("Shopping list is empty. Nothing to update.\n");
+        return;
+    }
+    int index;
+    printf("Enter the index of the item to update: ");
+    scanf("%d", &index);
+    getchar(); // Consume the newline character left in the input buffer
+
+    if (index < 1 || index > itemCount) {
+        printf("Invalid index. Please enter a valid index.\n");
+        return;
+    }
+
+    printf("Enter the new name for the item: ");
+    fgets(shoppingList[index - 1].name, sizeof(shoppingList[index - 1].name), stdin);
+    // Remove the newline character from the input
+    shoppingList[index - 1].name[strcspn(shoppingList[index - 1].name, "\n")] = '\0';
+    printf("Item name updated.\n");
+}
+
 // Function to view the current list of items
 void viewList() {
     if (itemCount == 0) {
@@ -44,22 +91,29 @@ int main() {
 
     // Menu-driven loop
     do {
-        printf("\nShopping List Management\n1. Add Item\n2. View List\n3. Exit\nEnter your choice: ");
+        printf("\nShopping List Management\n1. Add Item\n2. Remove Item\n3. Update Item\n4. View List\n5. Exit\nEnter your choice: ");
         scanf("%d", &choice);
         getchar(); // Consume the newline character left in the input buffer
-        switch(choice) {
-            case 1: 
-                addItem(); 
+        switch (choice) {
+            case 1:
+                addItem();
                 break;
-            case 2: 
-                viewList(); 
+            case 2:
+                removeItem();
                 break;
-            case 3: 
-                printf("Exiting program. Goodbye!\n"); 
+            case 3:
+                updateItem();
                 break;
-            default: 
+            case 4:
+                viewList();
+                break;
+            case 5:
+                printf("Exiting program. Goodbye!\n");
+                break;
+            default:
                 printf("Invalid choice. Please try again.\n");
         }
-    } while (choice != 3); // Loop until user chooses to exit
+    } while (choice != 5); // Loop until user chooses to exit
     return 0;
 }
+
