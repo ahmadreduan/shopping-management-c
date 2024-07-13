@@ -106,6 +106,7 @@ void addItem() {
     printf("Item added to the list.\n");
 }
 
+
 // Function to remove an item from the list
 void removeItem() {
     if (itemCount == 0) {
